@@ -1,8 +1,6 @@
 import org.vertx.groovy.core.http.RouteMatcher
 
-def server = vertx.createHttpServer()
-
-def rm = new RouteMatcher()
+def rm = vertx.rm
 
 rm.get('/digest') { req ->
   req.with {
@@ -32,4 +30,3 @@ rm.get('/digest') { req ->
   }
 }
 
-vertx.createHttpServer().requestHandler(rm.asClosure()).listen(8080)

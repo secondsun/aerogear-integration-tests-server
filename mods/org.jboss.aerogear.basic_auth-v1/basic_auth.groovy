@@ -1,17 +1,24 @@
-import org.vertx.groovy.core.http.RouteMatcher
+import java.util.logging.Logger
 
-def server = vertx.createHttpServer()
+def eb = vertx.eventBus
 
-def rm = new RouteMatcher()
+eb.registerHandler(".login", { message -> 
+    def reply = [:]
+    reply['headers'] = [:]
+    try {
+        Logger logger = Logger.getLogger("")
+        logger.info (message.body.toString())
+        if (message.body['headers']['authorization'] == 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==') {
+            reply['statusCode'] = 200 ;
+        } else {
+            reply['statusCode'] = 401 ;
+        }
+        reply.body = "{'\n'}"
+    } finally {
+        message.reply reply
+    }
+}, {eb.send('test-registered', '.login')}
+)
 
-rm.post('/login') { req ->
-  if (req.headers['Authorization'] == 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==') {
-    req.response.with { statusCode = 200 };
-  } else {
-    req.response.with { statusCode = 401 };
-  }
-  req.response.end "{'\n'}"
-  req.response.close()
-}
 
-vertx.createHttpServer().requestHandler(rm.asClosure()).listen(8080)
+
