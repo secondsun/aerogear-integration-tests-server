@@ -3,10 +3,9 @@ import org.vertx.groovy.core.http.RouteMatcher
 def eb = vertx.eventBus
 
 def modules = [
-	'org.jboss.aerogear.basic_auth-v1'
-//    ,
-//	'org.jboss.aerogear.digest_auth-v1',
-//	'org.jboss.aerogear.multipart-v1'
+	'org.jboss.aerogear.basic_auth-v1',
+	'org.jboss.aerogear.digest_auth-v1',
+	'org.jboss.aerogear.multipart-v1'
 ]
 
 def addresses = []

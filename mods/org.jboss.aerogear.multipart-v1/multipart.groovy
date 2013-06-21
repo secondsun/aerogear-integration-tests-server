@@ -1,13 +1,17 @@
-import org.vertx.groovy.core.http.RouteMatcher
+def eb = vertx.eventBus
 
-def rm = vertx.rm
+eb.registerHandler(".test.post", { message -> 
+    def reply = [:]
+    reply['headers'] = [:]
+    try {
+        
+        reply.body = "{'authorUsername':'noname'}"
+    } finally {
+        message.reply reply
+    }
+}, {eb.send('test-registered', '.test.post')}
+)
 
-rm.post('/test/post') { req ->
-  req.response.with {
-      end "{'authorUsername':'noname'}"
-      close()
-  }
-     
-}
+
 
 
