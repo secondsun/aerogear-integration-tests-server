@@ -5,6 +5,7 @@ def eb = vertx.eventBus
 def modules = [
 	'org.jboss.aerogear.basic_auth-v1',
 	'org.jboss.aerogear.digest_auth-v1',
+        'org.jboss.aerogear.pipe_paging-v1',
 	'org.jboss.aerogear.multipart-v1'
 ]
 
